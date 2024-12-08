@@ -60,8 +60,7 @@ public class BanCommand implements CommandExecutor {
         Timestamp expiration = calculateExpirationDate(duration);
 
         UUID playerUUID = player.getUniqueId();
-        banManager.banPlayer(playerUUID, playerName, reason, expiration);
-        banManager.addBanToHistory(playerUUID, playerName, reason, expiration, staffName, staffAction);
+        banManager.banPlayer(playerUUID, playerName, reason, expiration, staffName, staffAction);
 
         player.kickPlayer(msg(config.getString("messages.playerKicked").replace("{reason}", reason)));
 

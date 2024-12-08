@@ -1,0 +1,27 @@
+name: BanPlugin
+version: '1.0'
+main: it.dominick.devroom.BanPlugin
+api-version: 1.13
+authors: [ Dominick12 ]
+description: A trial DevRoom Plugin
+
+permissions:
+  banplugin.admin:
+    description: Permission to use the /ban and /unban command
+    default: op
+  banplugin.notify:
+    description: Permission to receive ban notifications
+    default: op
+
+
+commands:
+  ban:
+    description: Ban Player
+    usage: /ban <player> [duration] [reason]
+    aliases: tempban
+  unban:
+    description: Unban Player
+    usage: /unban <player>
+  history:
+    description: See all the free kicks players have received
+    usage: /history <player>

@@ -6,22 +6,28 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class BanData {
-    private String playerName;
-    private UUID playerUUID;
-    private String reason;
-    private Timestamp startTime;
-    private Timestamp expiration;
-    private String staffName;
-    private String staffAction;
+    private final String playerName;
+    private final UUID playerUUID;
+    private final String reason;
+    private final Timestamp startTime;
+    private final Timestamp expiration;
+    private final String staffName;
+    private final String staffAction;
+    private final boolean isActive;
 
-    public BanData(String playerName, UUID playerUUID, String reason, Timestamp startTime, Timestamp expiration, String staffName, String action) {
+    public BanData(String playerName, UUID playerUUID, String reason, Timestamp startTime, Timestamp expiration, String staffName, String staffAction, boolean isActive) {
         this.playerName = playerName;
         this.playerUUID = playerUUID;
         this.reason = reason;
         this.startTime = startTime;
         this.expiration = expiration;
         this.staffName = staffName;
-        this.staffAction = action;
+        this.staffAction = staffAction;
+        this.isActive = isActive;
+    }
+
+    public boolean isActive() {
+        return isActive;
     }
 
     public UUID getPlayerUUID() {
@@ -48,8 +54,19 @@ public class BanData {
         return staffName;
     }
 
-    public String getAction() {
+    public String getStaffAction() {
         return staffAction;
     }
-}
 
+    public Duration getBanDuration() {
+        if (expiration == null) {
+            return null;
+        }
+        return Duration.between(startTime.toLocalDateTime(), expiration.toLocalDateTime());
+    }
+
+    public boolean isPermanent() {
+        return expiration == null;
+    }
+
+}

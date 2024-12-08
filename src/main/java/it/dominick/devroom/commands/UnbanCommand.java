@@ -42,13 +42,9 @@ public class UnbanCommand implements CommandExecutor {
         }
 
         String staffName = sender.getName();
-        String staffAction = "UNBAN";
         String reason = "No Reason";
-        LocalDateTime now = LocalDateTime.now();
-        Timestamp expiration = Timestamp.valueOf(now);
 
-        banManager.unbanPlayer(playerUUID);
-        banManager.addBanToHistory(playerUUID, playerName, reason, expiration, staffName, staffAction);
+        banManager.unbanPlayer(playerUUID, playerName, staffName, reason);
 
         sender.sendMessage(msg(config.getString("messages.playerUnbanned")).replace("{player}", playerName));
 

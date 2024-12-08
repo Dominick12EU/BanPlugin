@@ -18,8 +18,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -132,10 +130,12 @@ public class HistoryCommand implements CommandExecutor {
         for (String line : lore) {
             line = line.replace("{banDate}", String.valueOf(banData.getStartTime()))
                     .replace("{expiration}", String.valueOf(banData.getExpiration()))
+                    .replace("{isActive}", String.valueOf(banData.isActive()))
                     .replace("{reason}", banData.getReason())
                     .replace("{staffer}", banData.getStaffName())
                     .replace("{player}", banData.getPlayerName())
-                    .replace("{action}", banData.getAction());
+                    .replace("{action}", banData.getStaffAction());
+
             formattedLore.add(line);
         }
 

@@ -25,12 +25,16 @@ public class JoinPlayerListener implements Listener {
     @EventHandler
     public void onPlayerJoin(AsyncPlayerPreLoginEvent event) {
         UUID playerUUID = event.getUniqueId();
+        String playerName = event.getName();
 
         LocalDateTime currentDateTime = LocalDateTime.now();
         Timestamp expiration = banManager.getBanExpiration(playerUUID);
 
+        String staffName = "CONSOLE";
+        String reason = "No Reason";
+
         if (expiration != null && currentDateTime.isAfter(expiration.toLocalDateTime())) {
-            banManager.unbanPlayer(playerUUID);
+            banManager.unbanPlayer(playerUUID, playerName, staffName, reason);
         } else if (banManager.isBanned(playerUUID)) {
             List<String> banDisplayList = config.getStringList("messages.banDisplay");
             event.setLoginResult(null);

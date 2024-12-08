@@ -29,7 +29,6 @@ public final class BanPlugin extends JavaPlugin {
 
             databaseManager = new DatabaseManager(host, port, database, username, password);
             databaseManager.connect();
-            databaseManager.createHistoryTable();
             databaseManager.createBansTable();
 
             banManager = new BanManager(databaseManager);

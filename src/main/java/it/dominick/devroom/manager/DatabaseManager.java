@@ -19,7 +19,6 @@ public class DatabaseManager {
         dataSource = new HikariDataSource(config);
     }
 
-
     public void connect() {
         try {
             dataSource.getConnection();
@@ -28,44 +27,39 @@ public class DatabaseManager {
         }
     }
 
+    public void createPlayerTable() {
+        try (Connection connection = dataSource.getConnection();
+             Statement statement = connection.createStatement()) {
+            String query = "CREATE TABLE IF NOT EXISTS players (" +
+                    "id INT PRIMARY KEY AUTO_INCREMENT, " +
+                    "player_uuid VARCHAR(36) NOT NULL UNIQUE, " +
+                    "player_name VARCHAR(255) NOT NULL)";
+            statement.executeUpdate(query);
+        } catch (SQLException e) {
+            System.out.println("Error creating players table: " + e.getMessage());
+        }
+    }
+
     public void createBansTable() {
         try (Connection connection = dataSource.getConnection();
              Statement statement = connection.createStatement()) {
             String query = "CREATE TABLE IF NOT EXISTS bans (" +
-                    "id INT PRIMARY KEY AUTO_INCREMENT," +
-                    "player_name VARCHAR(255) NOT NULL," +
-                    "player_uuid VARCHAR(36) NOT NULL," +
-                    "reason VARCHAR(255) NOT NULL," +
-                    "expiration TIMESTAMP)";
-            statement.executeUpdate(query);
-
-            String alterQuery = "ALTER TABLE bans MODIFY COLUMN expiration DATETIME(6)";
-            statement.executeUpdate(alterQuery);
-        } catch (SQLException e) {
-            System.out.println("Error creating ban table: " + e.getMessage());
-        }
-    }
-
-    public void createHistoryTable() {
-        try (Connection connection = dataSource.getConnection();
-             Statement statement = connection.createStatement()) {
-            String query = "CREATE TABLE IF NOT EXISTS ban_history (" +
-                    "id INT PRIMARY KEY AUTO_INCREMENT," +
-                    "player_name VARCHAR(255) NOT NULL," +
-                    "player_uuid VARCHAR(36) NOT NULL," +
-                    "reason VARCHAR(255) NOT NULL," +
-                    "ban_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, " +
+                    "id INT PRIMARY KEY AUTO_INCREMENT, " +
+                    "player_id INT NOT NULL, " +
+                    "reason VARCHAR(255) NOT NULL, " +
                     "expiration DATETIME(6), " +
+                    "ban_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, " +
                     "staff_name VARCHAR(255) NOT NULL, " +
-                    "staff_action VARCHAR(255) NOT NULL)";
+                    "staff_action VARCHAR(255) NOT NULL, " +
+                    "is_active BOOLEAN DEFAULT TRUE, " +
+                    "FOREIGN KEY (player_id) REFERENCES players(id) " +
+                    "ON DELETE CASCADE ON UPDATE CASCADE)";
             statement.executeUpdate(query);
-
-            String alterQuery = "ALTER TABLE ban_history MODIFY COLUMN expiration DATETIME(6)";
-            statement.executeUpdate(alterQuery);
         } catch (SQLException e) {
-            System.out.println("Error creating history table: " + e.getMessage());
+            System.out.println("Error creating bans table: " + e.getMessage());
         }
     }
+
 
     public Connection getConnection() throws SQLException {
         return dataSource.getConnection();
@@ -75,4 +69,3 @@ public class DatabaseManager {
         dataSource.close();
     }
 }
-

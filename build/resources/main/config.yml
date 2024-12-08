@@ -1,0 +1,49 @@
+database:
+  host: localhost
+  port: 3306
+  name: name_database
+  username: user
+  password: password
+
+messages:
+  usageBan: "&cUsage /ban <player> [duration] [reason]"
+  usageUnban: "&cUsage: /unban <player>"
+  usageHistory: "&cUsage: /history <player>"
+  onlyPlayer: "&cOnly players can execute this command"
+  noPunish: "&cNo punishments found for this player"
+  noPermission: "&cYou don't have permission to use this command"
+  confirmedBan: "&aPlayer banned successfully"
+  playerNotOnline: "&cPlayer &7{player}&c is not online"
+  playerNotBanned: "&cPlayer &7{player}&c is not banned"
+  playerUnbanned: "&aPlayer &7{player}&a it was unbanned"
+  playerKicked: "&cYou have been banned: {reason}"
+  defaultReason: "BanHammer has spoken"
+  banDisplay:
+    - "&c&lBan&4&lPlugin"
+    - ""
+    - "&cYou have been &lBanned"
+    - "&cExpires: &7{expiration}"
+  banNotification:
+    - " &c&m-------------------------------"
+    - "&7  ● &cBanned by: &f{sender}"
+    - "&7  ● &cHe banned: &f{player}"
+    - "&7  ● &cReason: &f{reason}"
+    - " &c&m-------------------------------"
+
+gui:
+  title: "§cBan History"
+  titleBook: "&cPunish"
+  punishMaterial: BOOK
+  materialPage: ARROW
+  materialFill: GRAY_STAINED_GLASS_PANE
+  nextPage: "&aNext Page"
+  previousPage: "&cPrevious Page"
+  punishLore:
+    - ""
+    - " &4● &cSuspected: &f{player}"
+    - " &4● &cBanned by: &f{staffer}"
+    - " &4● &cReason: &f{reason}"
+    - ""
+    - " &4● &cType: &7{action}"
+    - " &4● &cBanned the: &7{banDate}"
+    - " &4● &cExpires: &7{expiration}"
